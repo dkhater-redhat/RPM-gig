@@ -5,7 +5,11 @@ How to Use:
 - This script processes the raw data for the current day and saves it as a .parquet file in the data/ directory.
 
 
-2. Peek at the data
-    `python -m scripts.peek` 
+2. Filter to BaseOS and AppStream Packages
+    `python -m scripts.filter_to_supported_repos` 
+- This script loads the most recent .parquet file and filters all BaseOS and AppStream packages from our pre-populated CSV.
+
+3.  `python -m scripts.peek`
 - This script loads the most recent .parquet file and prints the first few rows and column names so you can verify the data.
+
 

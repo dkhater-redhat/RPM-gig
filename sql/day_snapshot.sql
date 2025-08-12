@@ -1,8 +1,8 @@
 -- Pull a single day of RHEL 10 data, latest snapshot per system.
 -- Notes:
--- - Keep vendor filter to Red Hat, Inc. (adjust if needed)
+-- - Keep vendor filter to red hat
 -- - BaseOS/AppStream filtering can be added later when you have a mapping table
--- - Kernel filtering happens in Python after load (to remove container-ish noise)
+-- - Kernel filtering happens in Python after load
 
 WITH day_slice AS (
   SELECT

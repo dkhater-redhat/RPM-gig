@@ -34,9 +34,9 @@ def kernel_filter(df: pd.DataFrame) -> pd.DataFrame:
               .drop(columns=["has_kernel"]))
 
 def main():
-    # if out.exists():
-    #     print(f"Parquet already exists: {out}")
-    #     return
+    if out.exists():
+        print(f"Parquet already exists: {out}")
+        return
     # run query against Starburst and get the results
     cols, rows = run_query(SQL)
 
@@ -54,7 +54,7 @@ def main():
     print(kernel_rows[["inventory_id", "name"]].head(20))
 
     # save to parquet for future use
-    # save_parquet(df, out)
+    save_parquet(df, out)
 
     # confirmation log
     print(f"Saved {len(df):,} rows → {out}")

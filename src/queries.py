@@ -13,13 +13,15 @@ def day_snapshot_sql(year: int, month: int, day: int, rhel_major: int = 10) -> s
         AND rhel_major = {rhel_major}
         AND LOWER(vendor) = 'red hat, inc.'
     ),
-    latest_snapshot AS (
-      SELECT * FROM (
-        SELECT ds.*,
-               ROW_NUMBER() OVER (PARTITION BY inventory_id ORDER BY uploaded_at DESC) rn
-        FROM day_slice ds
-      ) z WHERE rn = 1
+    latest_upload AS (
+      SELECT inventory_id, MAX(uploaded_at) AS uploaded_at
+      FROM day_slice
+      GROUP BY inventory_id
     )
-    SELECT *
-    FROM latest_snapshot
+    SELECT ds.*
+    FROM day_slice ds
+    JOIN latest_upload lu
+      ON ds.inventory_id = lu.inventory_id
+     AND ds.uploaded_at  = lu.uploaded_at
     """
+

@@ -1,0 +1,44 @@
+-- Pull a single day of RHEL 10 data, latest snapshot per system.
+-- Notes:
+-- - Keep vendor filter to Red Hat, Inc. (adjust if needed)
+-- - BaseOS/AppStream filtering can be added later when you have a mapping table
+-- - Kernel filtering happens in Python after load (to remove container-ish noise)
+
+WITH day_slice AS (
+  SELECT
+    org_id,
+    ebs_account,
+    inventory_id,
+    request_id,
+    uploaded_at,
+    rhel_major,
+    rhel_minor,
+    virt_what_info,
+    name,
+    version,
+    release,
+    arch,
+    epoch,
+    vendor,
+    created_year,
+    created_month,
+    created_day
+  FROM s3_datahub_insights.insights_wh_extraction_rules.installed_rpms
+  WHERE created_year = 2025
+    AND created_month = 7
+    AND created_day = 30
+    AND rhel_major = 10
+    AND LOWER(vendor) = 'red hat, inc.'
+)
+, latest_snapshot AS (
+  SELECT *
+  FROM (
+    SELECT
+      ds.*,
+      ROW_NUMBER() OVER (PARTITION BY inventory_id ORDER BY uploaded_at DESC) AS rn
+    FROM day_slice ds
+  ) z
+  WHERE rn = 1
+)
+SELECT *
+FROM latest_snapshot

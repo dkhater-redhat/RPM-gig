@@ -1,0 +1,11 @@
+How to Use:
+
+1. Generate the Parquet file
+     `python -m scripts.extract_day`
+- This script processes the raw data for the current day and saves it as a .parquet file in the data/ directory.
+
+
+2. Peek at the data
+    `python -m scripts.peek` 
+- This script loads the most recent .parquet file and prints the first few rows and column names so you can verify the data.
+

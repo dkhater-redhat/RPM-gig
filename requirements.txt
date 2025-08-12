@@ -1,0 +1,6 @@
+trino
+requests-oauthlib
+python-dotenv
+pandas
+pyarrow
+tqdm

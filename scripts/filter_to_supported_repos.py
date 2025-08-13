@@ -4,11 +4,11 @@ import pandas as pd
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_ROOT / "data"
-PKG_DIR = DATA_DIR / "packages"
+PKG_DIR = DATA_DIR / "repositories"
 
 # Input CSVs you scraped
-APPSTREAM_CSV = PKG_DIR / "rhel9_appstream_packages.csv"
-BASEOS_CSV    = PKG_DIR / "rhel9_baseos_packages.csv"
+APPSTREAM_CSV = PKG_DIR / "rhel10_appstream_packages.csv"
+BASEOS_CSV    = PKG_DIR / "rhel10_baseos_packages.csv"
 
 # Find latest parquet from your extract
 def latest_parquet() -> Path:

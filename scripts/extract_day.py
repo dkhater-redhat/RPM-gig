@@ -18,6 +18,10 @@ SQL = day_snapshot_sql(YEAR, MONTH, DAY, rhel_major=10)
 out = cache_name(SQL, prefix=f"rhel10_{YEAR:04d}{MONTH:02d}{DAY:02d}")
 
 # defining a filter function to remove systems without a kernel package
+
+# want to keep things that have kernel in the name
+# want to filter out the system that do not have a package starting with kernel
+# we want to keep everything that has kernel 
 def kernel_filter(df: pd.DataFrame) -> pd.DataFrame:
     # create a new column `is_kernel` = true if the package name starts with "kernel"
     has_kernel = (
